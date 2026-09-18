@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 })
 
-// ============ 咨询额度（演示逻辑，生产环境由服务端发放） ============
+// ============ 技术服务额度（演示逻辑，生产环境由服务端发放） ============
 const QUOTA_KEY = 'xq_consult_quota'
 function getQuota(): number {
   const v = parseInt(localStorage.getItem(QUOTA_KEY) || '0', 10)
@@ -53,12 +53,12 @@ window.buyPackage = function (btn: HTMLElement): void {
   btn.getAttribute('data-price')
   if (
     window.confirm(
-      `【演示】模拟虚拟支付成功，到账 ${times} 次咨询额度？\n（生产环境此处调起微信虚拟支付，支付成功后由服务端回调自动发放额度）`,
+      `【演示】模拟虚拟支付成功，到账 ${times} 次技术服务额度？\n（生产环境此处调起微信虚拟支付，支付成功后由服务端回调自动发放额度）`,
     )
   ) {
     setQuota(getQuota() + times)
     refreshQuota()
-    window.alert(`已到账 ${times} 次咨询额度，现在可以在线咨询了。`)
+    window.alert(`已到账 ${times} 次技术服务额度，现在可以进行在线技术服务了。`)
   }
 }
 
@@ -67,12 +67,12 @@ consultForm?.addEventListener('submit', (e) => {
   e.preventDefault()
   const q = getQuota()
   if (q <= 0) {
-    window.alert('咨询次数不足，请先购买套餐。')
+    window.alert('技术服务次数不足，请先购买在线技术服务套餐。')
     return
   }
   setQuota(q - 1)
   refreshQuota()
-  window.alert(`咨询已提交，剩余 ${getQuota()} 次。`)
+  window.alert(`技术服务已提交，剩余 ${getQuota()} 次。`)
   consultForm.reset()
 })
 

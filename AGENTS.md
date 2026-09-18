@@ -59,3 +59,28 @@
 - 禁止写 `<style>` 块做布局；禁止引入其它 CSS / JS 框架。
 - 禁止在 HTML 里再引入一次 Bootstrap（已自动注入）。
 - 禁止用前端框架（React/Vue 等）重写页面。
+
+## 7. 运行与预览（AI 必读）
+
+本项目是 Vite 多页静态站。源码 `src/*.html` **不能用浏览器直接打开**，必须经 Vite 处理才能正常显示：
+
+- 页面通过 `<xq-include file="...">` 引入公共片段（`src/partials/doc-start.html`、`doc-end.html`、`footer.html` 等），并用 `<?=$变量?>` 占位符（由 `<xq-include ... 变量="值">` 注入标题 / 样式令牌等）。
+- `xq-include` 与 `<?=$...?>` 只有在 Vite 构建 / 预览时才会被解析替换。直接双击 `src/index.html` 只会看到未替换的占位标签，且 bootstrap 等依赖不会加载，页面是「坏的」。
+
+正确预览（任选其一）：
+
+- 开发预览（推荐）：`npm run dev` —— 启动 Vite 开发服务器，终端输出本地地址（默认 http://localhost:5173/ ），浏览器打开该地址即可看到完整渲染的站点。
+- 构建产物：`npm run build` —— 产出到仓库根的 `html/` 目录（`build.outDir='../html'`），之后可直接用浏览器打开 `html/index.html`（含 file:// 也兼容，已做相对路径处理）。
+
+package.json 脚本一览：
+
+| 命令 | 作用 |
+|------|------|
+| `npm run dev` | 启动开发服务器（预览 / 调试首选） |
+| `npm run build` | 构建到 `html/` |
+| `npm run build:full` | 构建并打 xq 横幅 |
+| `npm run preview` | 预览 build 产物 |
+| `npm run pdf` | 用 export-pdf.mjs 导出 PDF |
+| `npm run typecheck` | 仅 TS 类型检查（tsc --noEmit） |
+
+补充（与上方模板示例的差异，务必以实际项目为准）：入口脚本为 `src/ts/main.ts`（非 `src/js/main.js`），样式源为 `src/scss/style.scss`，页面直接位于 `src/` 根（如 `src/index.html`、`src/service.html`、`src/my-service.html`），公共片段为 `src/partials/doc-start.html` / `doc-end.html` / `footer.html`。bootstrap 等依赖由 `vite-plugin-xq-cp-dep` 拷到 `public/` 并由内联脚本注入，请勿在 HTML 里手引 CDN。
