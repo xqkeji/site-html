@@ -1,4 +1,5 @@
 # site-html
+新齐程序实践的官网页面
 
 基于 **Vite 8 + xq 插件**的 HTML 产品官网工程（由 `xq-template` 生成）。
 
