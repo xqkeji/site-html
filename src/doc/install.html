@@ -1,0 +1,249 @@
+<xq-include file="/partials/doc-start.html" title="安装部署 - 新齐低代码开发框架文档" docClass=' doc-page'></xq-include>
+
+
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><a href="../index.html" class="text-white text-decoration-none">主页</a>&nbsp;/&nbsp;文档&nbsp;/&nbsp;安装部署</span>
+                        <span class="doc-version">v2.0</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="doc-content">
+                            <h2 id="requirements"><i class="bi bi-gear me-1"></i>环境要求</h2>
+                            <table class="doc-table">
+                                <thead>
+                                    <tr>
+                                        <th>组件</th>
+                                        <th>最低版本</th>
+                                        <th>推荐版本</th>
+                                        <th>说明</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>PHP</td>
+                                        <td><code>7.4</code></td>
+                                        <td><code>8.1+</code></td>
+                                        <td>需开启 pdo、mbstring、curl 扩展</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MySQL</td>
+                                        <td><code>5.7</code></td>
+                                        <td><code>8.0+</code></td>
+                                        <td>InnoDB 引擎</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MongoDB</td>
+                                        <td><code>4.0</code></td>
+                                        <td><code>6.0+</code></td>
+                                        <td>可选，用于日志与缓存</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nginx / Apache</td>
+                                        <td><code>-</code></td>
+                                        <td><code>Nginx 1.20+</code></td>
+                                        <td>推荐 Nginx + PHP-FPM</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Composer</td>
+                                        <td><code>2.0</code></td>
+                                        <td><code>2.5+</code></td>
+                                        <td>依赖管理工具</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h2 id="composer"><i class="bi bi-download me-1"></i>Composer 安装</h2>
+                            <p>通过 Composer 创建新项目：</p>
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                <span class="code-comment"># 创建新项目</span><br>
+                                composer create-project xqkeji/framework myapp<br><br>
+                                <span class="code-comment"># 进入项目目录</span><br>
+                                <span class="code-keyword">cd</span> myapp
+                            </div>
+
+                            <div class="doc-tip tip-info">
+                                <i class="bi bi-info-circle-fill"></i>
+                                <div>Composer 会自动下载框架及其依赖包，并生成 <code>vendor</code> 目录。</div>
+                            </div>
+
+                            <h2 id="config"><i class="bi bi-sliders me-1"></i>配置数据库</h2>
+                            <p>复制环境配置文件并修改数据库连接信息：</p>
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                cp .env.example .env
+                            </div>
+                            <p>编辑 <code>.env</code> 文件：</p>
+                            <div class="doc-code">
+                                <span class="code-label">env</span>
+                                <span class="code-variable">APP_NAME</span>=<span class="code-string">"新齐程序实践"</span><br>
+                                <span class="code-variable">APP_ENV</span>=<span class="code-string">production</span><br>
+                                <span class="code-variable">APP_DEBUG</span>=<span class="code-keyword">false</span><br><br>
+                                <span class="code-variable">DB_DRIVER</span>=<span class="code-string">mysql</span><br>
+                                <span class="code-variable">DB_HOST</span>=<span class="code-string">127.0.0.1</span><br>
+                                <span class="code-variable">DB_PORT</span>=<span class="code-string">3306</span><br>
+                                <span class="code-variable">DB_NAME</span>=<span class="code-string">xqkeji_db</span><br>
+                                <span class="code-variable">DB_USER</span>=<span class="code-string">root</span><br>
+                                <span class="code-variable">DB_PASS</span>=<span class="code-string">your_password</span>
+                            </div>
+
+                            <div class="doc-tip tip-warning">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <div>生产环境请务必设置 <code>APP_DEBUG=false</code>，避免敏感信息泄露。</div>
+                            </div>
+
+                            <h3>初始化数据库</h3>
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji migrate:run
+                            </div>
+                            <p>该命令会自动创建基础表结构和初始数据。</p>
+
+                            <h2 id="nginx"><i class="bi bi-server me-1"></i>Nginx 配置</h2>
+                            <p>配置 Nginx 虚拟主机：</p>
+                            <div class="doc-code">
+                                <span class="code-label">nginx</span>
+                                <span class="code-keyword">server</span> {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">listen</span> 80;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">server_name</span> <span class="code-string">yourdomain.com</span>;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">root</span> /path/to/myapp/public;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">index</span> index.php;<br><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">location</span> / {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">try_files</span> <span class="code-variable">$uri</span> <span class="code-variable">$uri</span>/ /index.php?<span class="code-variable">$query_string</span>;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">location</span> ~ \.php$ {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">fastcgi_pass</span> 127.0.0.1:9000;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">fastcgi_param</span> SCRIPT_FILENAME <span class="code-variable">$document_root$fastcgi_script_name</span>;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">include</span> fastcgi_params;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                }
+                            </div>
+
+                            <h3>Apache 配置</h3>
+                            <p>如果使用 Apache，确保启用 <code>mod_rewrite</code> 模块：</p>
+                            <div class="doc-code">
+                                <span class="code-label">apache</span>
+                                <span class="code-keyword">&lt;VirtualHost</span> *:80<span class="code-keyword">&gt;</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">ServerName</span> yourdomain.com<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">DocumentRoot</span> /path/to/myapp/public<br><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">&lt;Directory</span> /path/to/myapp/public<span class="code-keyword">&gt;</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">AllowOverride</span> All<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">Require</span> all granted<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">&lt;/Directory&gt;</span><br>
+                                <span class="code-keyword">&lt;/VirtualHost&gt;</span>
+                            </div>
+
+                            <h3>验证安装</h3>
+                            <p>访问 <code>http://yourdomain.com</code>，看到欢迎页面即表示安装成功。</p>
+
+                            <div class="doc-tip tip-success">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <div>如果遇到问题，请检查 PHP 错误日志和 Web 服务器日志，或提交<a href="../consultation.html">技术咨询</a>获取帮助。</div>
+                            </div>
+
+                            <div class="doc-pagination">
+                                <a href="index.html">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <div>
+                                        <div class="page-label">上一篇</div>
+                                        <div class="page-title">框架概述</div>
+                                    </div>
+                                </a>
+                                <a href="quickstart.html" class="page-next">
+                                    <div>
+                                        <div class="page-label">下一篇</div>
+                                        <div class="page-title">快速开始 <i class="bi bi-arrow-right"></i></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card doc-sidebar-toc">
+                    <div class="sidebar-header">文档目录
+                        <button class="sidebar-close-btn" aria-label="关闭"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <div class="sidebar-body doc-toc-body">
+                        <ul class="doc-toc">
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">基础</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="index.html"><span>框架概述</span></a></li>
+                                    <li class="toc-sub-group" data-toggle="toc">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-chevron-down toc-arrow"></i>
+                                            <i class="bi bi-folder text-secondary"></i>
+                                            <span class="fw-semibold">安装部署</span>
+                                            <span class="badge bg-secondary rounded-pill ms-auto">4</span>
+                                        </div>
+                                    </li>
+                                    <li class="toc-children">
+                                        <ul>
+                                            <li><a href="install.html#requirements" class="active"><span>环境要求</span></a></li>
+                                            <li><a href="install.html#composer"><span>Composer 安装</span></a></li>
+                                            <li><a href="install.html#config"><span>配置数据库</span></a></li>
+                                            <li><a href="install.html#nginx"><span>Nginx 配置</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="quickstart.html"><span>快速开始</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">架构</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">4</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="route.html"><span>路由系统</span></a></li>
+                                    <li><a href="controller.html"><span>控制器</span></a></li>
+                                    <li><a href="model.html"><span>模型与数据库</span></a></li>
+                                    <li><a href="view.html"><span>视图模板</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">进阶</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="config.html"><span>配置参考</span></a></li>
+                                    <li><a href="modules.html"><span>内置模块</span></a></li>
+                                    <li><a href="faq.html"><span>常见问题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="../license.html" class="quick-link"><i class="bi bi-shield-lock"></i>购买授权</a>
+                        <a href="../consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>提交咨询</a>
+                        <a href="../outsourcing.html" class="quick-link"><i class="bi bi-briefcase"></i>定制需求</a>
+                    </div>
+                </div>
+            </div>
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-overlay.html"></xq-include>
+<xq-include file="/partials/doc-end.html"></xq-include>

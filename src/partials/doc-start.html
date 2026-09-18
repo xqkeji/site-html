@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title><?=$title?></title>
+  <!-- 第三方依赖：由 vite-plugin-xq-cp-dep 拷贝到 public 后引用。
+       内联脚本按当前路径动态注入相对路径（/doc/ 页自动用 ../bootstrap/...），
+       让插件产物被真正使用且兼容 file:// 与导出 PDF。 -->
+  <script>
+    (function () {
+      var depth = (location.pathname.indexOf('/doc/') >= 0) ? '../' : '';
+      var head = document.head;
+      ['bootstrap/dist/css/bootstrap.min.css', 'bootstrap-icons/font/bootstrap-icons.css'].forEach(function (u) {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = depth + u;
+        head.appendChild(l);
+      });
+      var s = document.createElement('script');
+      s.src = depth + 'bootstrap/dist/js/bootstrap.bundle.min.js';
+      head.appendChild(s);
+    })();
+  </script>
+</head>
+<body class="bg-body-secondary<?=$docClass?>">
+  <div class="mobile-container bg-body-secondary">
+    <div class="top-navbar bg-primary text-white">
+      <button class="doc-menu-btn" aria-label="文档目录"><i class="bi bi-list"></i></button>
+      新齐程序实践
+    </div>
+
+    <nav class="bottom-nav bg-white">
+      <a href="/index.html" class="nav-item text-body">
+        <i class="bi bi-house-fill"></i>
+        <span>主页</span>
+      </a>
+      <a href="/license.html" class="nav-item text-body">
+        <i class="bi bi-shield-lock-fill"></i>
+        <span>授权</span>
+      </a>
+      <a href="/outsourcing.html" class="nav-item text-body">
+        <i class="bi bi-briefcase-fill"></i>
+        <span>定制</span>
+      </a>
+      <a href="/consultation.html" class="nav-item text-body">
+        <i class="bi bi-chat-dots-fill"></i>
+        <span>咨询</span>
+      </a>
+      <a href="/profile.html" class="nav-item text-body">
+        <i class="bi bi-person-fill"></i>
+        <span>我的</span>
+      </a>
+    </nav>

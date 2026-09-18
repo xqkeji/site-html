@@ -1,0 +1,158 @@
+<xq-include file="/partials/doc-start.html" title="常见问题 - 新齐低代码开发框架文档" docClass=' doc-page'></xq-include>
+
+
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><a href="../index.html" class="text-white text-decoration-none">主页</a>&nbsp;/&nbsp;文档&nbsp;/&nbsp;常见问题</span>
+                        <span class="doc-version">v2.0</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="doc-content">
+                            <h2 id="faq"><i class="bi bi-question-circle me-1"></i>常见问题</h2>
+
+                            <h3>Q：框架是否免费使用？</h3>
+                            <p>框架提供免费版本和商业授权版本。免费版本可用于个人学习和非商业项目；商业项目需要购买<a href="../license.html">商业授权</a>。</p>
+
+                            <h3>Q：是否支持 MongoDB？</h3>
+                            <p>支持。框架内置 MySQL 和 MongoDB 双驱动 ORM，可在配置文件中灵活切换或混合使用。详见<a href="model.html">模型与数据库</a>章节。</p>
+
+                            <h3>Q：如何进行版本升级？</h3>
+                            <p>通过 Composer 更新即可：</p>
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                composer update xqkeji/framework<br>
+                                php xqkeji migrate:run
+                            </div>
+
+                            <div class="doc-tip tip-warning">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <div>升级前请务必备份数据库和配置文件，并在测试环境验证后再部署到生产环境。</div>
+                            </div>
+
+                            <h3>Q：如何部署到生产环境？</h3>
+                            <p>请参考<a href="install.html">安装部署</a>文档，主要步骤包括：</p>
+                            <ol>
+                                <li>设置 <code>APP_ENV=production</code> 和 <code>APP_DEBUG=false</code></li>
+                                <li>配置 Web 服务器（Nginx/Apache）</li>
+                                <li>执行数据库迁移</li>
+                                <li>设置目录权限（storage、cache 等目录需可写）</li>
+                            </ol>
+
+                            <h3>Q：框架支持哪些 PHP 版本？</h3>
+                            <p>框架最低支持 PHP 7.4，推荐使用 PHP 8.1 及以上版本以获得更好的性能和特性支持。</p>
+
+                            <h3>Q：如何自定义模块？</h3>
+                            <p>框架采用模块化设计，您可以：</p>
+                            <ul>
+                                <li>使用命令行创建模块骨架：<code>php xqkeji make:module MyModule</code></li>
+                                <li>在 <code>app/Module</code> 目录下开发自定义模块</li>
+                                <li>参考<a href="modules.html">内置模块</a>了解模块结构</li>
+                            </ul>
+
+                            <h3>Q：遇到问题如何获取帮助？</h3>
+                            <p>您可以通过以下方式获取技术支持：</p>
+                            <ul>
+                                <li>提交<a href="../consultation.html">技术咨询</a>，我们将在 24 小时内响应</li>
+                                <li>查阅框架文档与示例代码</li>
+                                <li>联系我们的<a href="../contact-detail.html">技术团队</a>获取一对一支持</li>
+                            </ul>
+
+                            <div class="doc-pagination">
+                                <a href="modules.html">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <div>
+                                        <div class="page-label">上一篇</div>
+                                        <div class="page-title">内置模块</div>
+                                    </div>
+                                </a>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card doc-sidebar-toc">
+                    <div class="sidebar-header">文档目录</div>
+                    <div class="sidebar-body doc-toc-body">
+                        <ul class="doc-toc">
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">基础</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="index.html"><span>框架概述</span></a></li>
+                                    <li class="toc-sub-group" data-toggle="toc">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-chevron-down toc-arrow"></i>
+                                            <i class="bi bi-folder text-secondary"></i>
+                                            <span class="fw-semibold">安装部署</span>
+                                            <span class="badge bg-secondary rounded-pill ms-auto">4</span>
+                                        </div>
+                                    </li>
+                                    <li class="toc-children">
+                                        <ul>
+                                            <li><a href="install.html#requirements"><span>环境要求</span></a></li>
+                                            <li><a href="install.html#composer"><span>Composer 安装</span></a></li>
+                                            <li><a href="install.html#config"><span>配置数据库</span></a></li>
+                                            <li><a href="install.html#nginx"><span>Nginx 配置</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="quickstart.html"><span>快速开始</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">架构</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">4</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="route.html"><span>路由系统</span></a></li>
+                                    <li><a href="controller.html"><span>控制器</span></a></li>
+                                    <li><a href="model.html"><span>模型与数据库</span></a></li>
+                                    <li><a href="view.html"><span>视图模板</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">进阶</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="config.html"><span>配置参考</span></a></li>
+                                    <li><a href="modules.html"><span>内置模块</span></a></li>
+                                    <li><a href="faq.html" class="active"><span>常见问题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="../license.html" class="quick-link"><i class="bi bi-shield-lock"></i>购买授权</a>
+                        <a href="../consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>提交咨询</a>
+                        <a href="../outsourcing.html" class="quick-link"><i class="bi bi-briefcase"></i>定制需求</a>
+                    </div>
+                </div>
+            </div>
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-overlay.html"></xq-include>
+<xq-include file="/partials/doc-end.html"></xq-include>

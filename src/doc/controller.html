@@ -1,0 +1,195 @@
+<xq-include file="/partials/doc-start.html" title="控制器 - 新齐低代码开发框架文档" docClass=' doc-page'></xq-include>
+
+
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><a href="../index.html" class="text-white text-decoration-none">主页</a>&nbsp;/&nbsp;文档&nbsp;/&nbsp;控制器</span>
+                        <span class="doc-version">v2.0</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="doc-content">
+                            <h2 id="create"><i class="bi bi-gear me-1"></i>创建控制器</h2>
+                            <p>控制器位于 <code>app/Controller</code> 目录，继承自 <code>Xqkeji\Controller</code> 基类。</p>
+
+                            <h3>基础控制器</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-keyword">namespace</span> App\<span class="code-function">Controller</span>;<br><br>
+                                <span class="code-keyword">use</span> Xqkeji\<span class="code-function">Controller</span>;<br><br>
+                                <span class="code-keyword">class</span> <span class="code-function">UserController</span> <span class="code-keyword">extends</span> <span class="code-function">Controller</span><br>
+                                {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public function</span> <span class="code-function">index</span>()<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-variable">$this</span>-><span class="code-function">view</span>(<span class="code-string">'user/index'</span>);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                }
+                            </div>
+
+                            <h3>使用命令行创建</h3>
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji make:controller UserController
+                            </div>
+
+                            <h2 id="request"><i class="bi bi-inbox me-1"></i>请求处理</h2>
+                            <p>通过 <code>$this-&gt;request</code> 获取请求对象。</p>
+
+                            <h3>获取请求参数</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-comment">// 获取所有参数</span><br>
+                                <span class="code-variable">$data</span> = <span class="code-variable">$this</span>-><span class="code-function">request</span>()-&gt;<span class="code-function">all</span>();<br><br>
+                                <span class="code-comment">// 获取单个参数</span><br>
+                                <span class="code-variable">$name</span> = <span class="code-variable">$this</span>-><span class="code-function">request</span>()-&gt;<span class="code-function">input</span>(<span class="code-string">'name'</span>);<br><br>
+                                <span class="code-comment">// 获取带默认值</span><br>
+                                <span class="code-variable">$page</span> = <span class="code-variable">$this</span>-><span class="code-function">request</span>()-&gt;<span class="code-function">input</span>(<span class="code-string">'page'</span>, <span class="code-keyword">1</span>);<br><br>
+                                <span class="code-comment">// 判断参数是否存在</span><br>
+                                <span class="code-keyword">if</span> (<span class="code-variable">$this</span>-><span class="code-function">request</span>()-&gt;<span class="code-function">has</span>(<span class="code-string">'name'</span>)) {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// ...</span><br>
+                                }
+                            </div>
+
+                            <h3>文件上传</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$file</span> = <span class="code-variable">$this</span>-><span class="code-function">request</span>()-&gt;<span class="code-function">file</span>(<span class="code-string">'avatar'</span>);<br>
+                                <span class="code-keyword">if</span> (<span class="code-variable">$file</span>) {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$path</span> = <span class="code-variable">$file</span>-&gt;<span class="code-function">move</span>(<span class="code-string">'uploads/avatars'</span>);<br>
+                                }
+                            </div>
+
+                            <h2 id="response"><i class="bi bi-box-arrow-right me-1"></i>响应返回</h2>
+
+                            <h3>返回视图</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-keyword">return</span> <span class="code-variable">$this</span>-><span class="code-function">view</span>(<span class="code-string">'user/index'</span>, [<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'users'</span> =&gt; <span class="code-variable">$users</span><br>
+                                ]);
+                            </div>
+
+                            <h3>返回 JSON</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-keyword">return</span> <span class="code-variable">$this</span>-><span class="code-function">json</span>([<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'code'</span> =&gt; <span class="code-keyword">0</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'data'</span> =&gt; <span class="code-variable">$data</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'message'</span> =&gt; <span class="code-string">'success'</span><br>
+                                ]);
+                            </div>
+
+                            <h3>重定向</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-comment">// 重定向到指定路由</span><br>
+                                <span class="code-keyword">return</span> <span class="code-function">redirect</span>(<span class="code-string">'/user/list'</span>);<br><br>
+                                <span class="code-comment">// 重定向并携带数据</span><br>
+                                <span class="code-keyword">return</span> <span class="code-function">redirect</span>(<span class="code-string">'/user/list'</span>)-&gt;<span class="code-function">with</span>(<span class="code-string">'message'</span>, <span class="code-string">'操作成功'</span>);
+                            </div>
+
+                            <div class="doc-pagination">
+                                <a href="route.html">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <div>
+                                        <div class="page-label">上一篇</div>
+                                        <div class="page-title">路由系统</div>
+                                    </div>
+                                </a>
+                                <a href="model.html" class="page-next">
+                                    <div>
+                                        <div class="page-label">下一篇</div>
+                                        <div class="page-title">模型与数据库 <i class="bi bi-arrow-right"></i></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card doc-sidebar-toc">
+                    <div class="sidebar-header">文档目录
+                        <button class="sidebar-close-btn" aria-label="关闭"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <div class="sidebar-body doc-toc-body">
+                        <ul class="doc-toc">
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">基础</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="index.html"><span>框架概述</span></a></li>
+                                    <li class="toc-sub-group" data-toggle="toc">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-chevron-down toc-arrow"></i>
+                                            <i class="bi bi-folder text-secondary"></i>
+                                            <span class="fw-semibold">安装部署</span>
+                                            <span class="badge bg-secondary rounded-pill ms-auto">4</span>
+                                        </div>
+                                    </li>
+                                    <li class="toc-children">
+                                        <ul>
+                                            <li><a href="install.html#requirements"><span>环境要求</span></a></li>
+                                            <li><a href="install.html#composer"><span>Composer 安装</span></a></li>
+                                            <li><a href="install.html#config"><span>配置数据库</span></a></li>
+                                            <li><a href="install.html#nginx"><span>Nginx 配置</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="quickstart.html"><span>快速开始</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">架构</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">4</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="route.html"><span>路由系统</span></a></li>
+                                    <li><a href="controller.html" class="active"><span>控制器</span></a></li>
+                                    <li><a href="model.html"><span>模型与数据库</span></a></li>
+                                    <li><a href="view.html"><span>视图模板</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">进阶</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="config.html"><span>配置参考</span></a></li>
+                                    <li><a href="modules.html"><span>内置模块</span></a></li>
+                                    <li><a href="faq.html"><span>常见问题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="../license.html" class="quick-link"><i class="bi bi-shield-lock"></i>购买授权</a>
+                        <a href="../consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>提交咨询</a>
+                        <a href="../outsourcing.html" class="quick-link"><i class="bi bi-briefcase"></i>定制需求</a>
+                    </div>
+                </div>
+            </div>
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-overlay.html"></xq-include>
+<xq-include file="/partials/doc-end.html"></xq-include>

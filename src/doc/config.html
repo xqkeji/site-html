@@ -1,0 +1,226 @@
+<xq-include file="/partials/doc-start.html" title="配置参考 - 新齐低代码开发框架文档" docClass=' doc-page'></xq-include>
+
+
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><a href="../index.html" class="text-white text-decoration-none">主页</a>&nbsp;/&nbsp;文档&nbsp;/&nbsp;配置参考</span>
+                        <span class="doc-version">v2.0</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="doc-content">
+                            <h2 id="env"><i class="bi bi-sliders me-1"></i>环境配置</h2>
+                            <p>框架使用 <code>.env</code> 文件管理环境变量，支持多环境切换。</p>
+
+                            <h3>基础配置项</h3>
+                            <table class="doc-table">
+                                <thead>
+                                    <tr>
+                                        <th>配置项</th>
+                                        <th>说明</th>
+                                        <th>默认值</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>APP_NAME</code></td>
+                                        <td>应用名称</td>
+                                        <td>新齐程序实践</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>APP_ENV</code></td>
+                                        <td>运行环境 (local/production)</td>
+                                        <td>production</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>APP_DEBUG</code></td>
+                                        <td>调试模式 (true/false)</td>
+                                        <td>false</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>APP_URL</code></td>
+                                        <td>应用访问地址</td>
+                                        <td>http://localhost</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>APP_KEY</code></td>
+                                        <td>应用密钥（自动生成）</td>
+                                        <td>-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h2 id="database"><i class="bi bi-database me-1"></i>数据库配置</h2>
+                            <p>支持 MySQL 和 MongoDB 双驱动配置。</p>
+
+                            <h3>MySQL 配置</h3>
+                            <div class="doc-code">
+                                <span class="code-label">env</span>
+                                <span class="code-variable">DB_DRIVER</span>=<span class="code-string">mysql</span><br>
+                                <span class="code-variable">DB_HOST</span>=<span class="code-string">127.0.0.1</span><br>
+                                <span class="code-variable">DB_PORT</span>=<span class="code-string">3306</span><br>
+                                <span class="code-variable">DB_NAME</span>=<span class="code-string">xqkeji_db</span><br>
+                                <span class="code-variable">DB_USER</span>=<span class="code-string">root</span><br>
+                                <span class="code-variable">DB_PASS</span>=<span class="code-string">your_password</span><br>
+                                <span class="code-variable">DB_CHARSET</span>=<span class="code-string">utf8mb4</span><br>
+                                <span class="code-variable">DB_COLLATION</span>=<span class="code-string">utf8mb4_unicode_ci</span>
+                            </div>
+
+                            <h3>MongoDB 配置</h3>
+                            <div class="doc-code">
+                                <span class="code-label">env</span>
+                                <span class="code-variable">MONGO_HOST</span>=<span class="code-string">127.0.0.1</span><br>
+                                <span class="code-variable">MONGO_PORT</span>=<span class="code-string">27017</span><br>
+                                <span class="code-variable">MONGO_NAME</span>=<span class="code-string">xqkeji_db</span><br>
+                                <span class="code-variable">MONGO_USER</span>=<span class="code-string"></span><br>
+                                <span class="code-variable">MONGO_PASS</span>=<span class="code-string"></span>
+                            </div>
+
+                            <h2 id="cache"><i class="bi bi-lightning me-1"></i>缓存配置</h2>
+                            <p>框架支持多种缓存驱动。</p>
+
+                            <h3>缓存驱动</h3>
+                            <table class="doc-table">
+                                <thead>
+                                    <tr>
+                                        <th>驱动</th>
+                                        <th>说明</th>
+                                        <th>配置项</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>file</code></td>
+                                        <td>文件缓存（默认）</td>
+                                        <td>无需额外配置</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>redis</code></td>
+                                        <td>Redis 缓存</td>
+                                        <td>REDIS_HOST, REDIS_PORT</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>memcached</code></td>
+                                        <td>Memcached 缓存</td>
+                                        <td>MEMCACHED_HOST, MEMCACHED_PORT</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <h3>Redis 配置</h3>
+                            <div class="doc-code">
+                                <span class="code-label">env</span>
+                                <span class="code-variable">CACHE_DRIVER</span>=<span class="code-string">redis</span><br>
+                                <span class="code-variable">REDIS_HOST</span>=<span class="code-string">127.0.0.1</span><br>
+                                <span class="code-variable">REDIS_PORT</span>=<span class="code-string">6379</span><br>
+                                <span class="code-variable">REDIS_PASSWORD</span>=<span class="code-string"></span>
+                            </div>
+
+                            <div class="doc-tip tip-warning">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                <div>生产环境建议使用 Redis 或 Memcached 作为缓存驱动，性能优于文件缓存。</div>
+                            </div>
+
+                            <div class="doc-pagination">
+                                <a href="view.html">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <div>
+                                        <div class="page-label">上一篇</div>
+                                        <div class="page-title">视图模板</div>
+                                    </div>
+                                </a>
+                                <a href="modules.html" class="page-next">
+                                    <div>
+                                        <div class="page-label">下一篇</div>
+                                        <div class="page-title">内置模块 <i class="bi bi-arrow-right"></i></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card doc-sidebar-toc">
+                    <div class="sidebar-header">文档目录</div>
+                    <div class="sidebar-body doc-toc-body">
+                        <ul class="doc-toc">
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">基础</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="index.html"><span>框架概述</span></a></li>
+                                    <li class="toc-sub-group" data-toggle="toc">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-chevron-down toc-arrow"></i>
+                                            <i class="bi bi-folder text-secondary"></i>
+                                            <span class="fw-semibold">安装部署</span>
+                                            <span class="badge bg-secondary rounded-pill ms-auto">4</span>
+                                        </div>
+                                    </li>
+                                    <li class="toc-children">
+                                        <ul>
+                                            <li><a href="install.html#requirements"><span>环境要求</span></a></li>
+                                            <li><a href="install.html#composer"><span>Composer 安装</span></a></li>
+                                            <li><a href="install.html#config"><span>配置数据库</span></a></li>
+                                            <li><a href="install.html#nginx"><span>Nginx 配置</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="quickstart.html"><span>快速开始</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">架构</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">4</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="route.html"><span>路由系统</span></a></li>
+                                    <li><a href="controller.html"><span>控制器</span></a></li>
+                                    <li><a href="model.html"><span>模型与数据库</span></a></li>
+                                    <li><a href="view.html"><span>视图模板</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">进阶</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="config.html" class="active"><span>配置参考</span></a></li>
+                                    <li><a href="modules.html"><span>内置模块</span></a></li>
+                                    <li><a href="faq.html"><span>常见问题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="../license.html" class="quick-link"><i class="bi bi-shield-lock"></i>购买授权</a>
+                        <a href="../consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>提交咨询</a>
+                        <a href="../outsourcing.html" class="quick-link"><i class="bi bi-briefcase"></i>定制需求</a>
+                    </div>
+                </div>
+            </div>
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-overlay.html"></xq-include>
+<xq-include file="/partials/doc-end.html"></xq-include>

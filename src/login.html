@@ -1,0 +1,73 @@
+<xq-include file="/partials/doc-start.html" title="登录 - 新齐程序实践" docClass=''></xq-include>
+
+
+        <!-- 内容区 -->
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><i class="bi bi-box-arrow-in-right me-1"></i>登录</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="auth-form-wrapper">
+                            <form>
+                                <!-- 账号 -->
+                                <div class="mb-3">
+                                    <label class="form-label text-body">账号 / 手机号</label>
+                                    <input type="text" class="form-control" placeholder="请输入账号或手机号">
+                                </div>
+
+                                <!-- 密码 -->
+                                <div class="mb-3">
+                                    <label class="form-label text-body">密码</label>
+                                    <input type="password" class="form-control" placeholder="请输入密码">
+                                </div>
+
+                                <!-- 记住我 + 忘记密码 -->
+                                <div class="mb-3 auth-extra-row">
+                                    <label class="form-label text-body auth-extra-label">&nbsp;</label>
+                                    <div class="auth-extra-controls">
+                                        <label class="auth-check-label">
+                                            <input type="checkbox" id="rememberMe">
+                                            <span>记住我</span>
+                                        </label>
+                                        <a href="forgot-password.html" class="text-decoration-none small">忘记密码？</a>
+                                    </div>
+                                </div>
+
+                                <!-- 登录按钮 -->
+                                <button type="submit" class="btn btn-primary btn-submit">登录</button>
+
+                                <!-- 底部互链 -->
+                                <div class="auth-links">
+                                    还没有账号？<a href="register.html">立即注册</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="register.html" class="quick-link"><i class="bi bi-person-plus"></i>注册账号</a>
+                        <a href="forgot-password.html" class="quick-link"><i class="bi bi-key"></i>忘记密码</a>
+                        <a href="index.html" class="quick-link"><i class="bi bi-house"></i>返回首页</a>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">帮助提示</div>
+                    <div class="sidebar-body">
+                        <ul>
+                            <li><a href="register.html">还没有账号？<span class="sidebar-date">注册</span></a></li>
+                            <li><a href="forgot-password.html">忘记密码了？<span class="sidebar-date">找回</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 底部版权 -->
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-end.html"></xq-include>

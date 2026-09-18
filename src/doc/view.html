@@ -1,0 +1,201 @@
+<xq-include file="/partials/doc-start.html" title="视图模板 - 新齐低代码开发框架文档" docClass=' doc-page'></xq-include>
+
+
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><a href="../index.html" class="text-white text-decoration-none">主页</a>&nbsp;/&nbsp;文档&nbsp;/&nbsp;视图模板</span>
+                        <span class="doc-version">v2.0</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="doc-content">
+                            <h2 id="syntax"><i class="bi bi-file-earmark-code me-1"></i>模板语法</h2>
+                            <p>视图文件位于 <code>app/View</code> 目录，使用简洁的模板引擎语法。</p>
+
+                            <h3>输出变量</h3>
+                            <div class="doc-code">
+                                <span class="code-label">html</span>
+                                <span class="code-comment">&lt;!-- 输出变量（自动转义） --&gt;</span><br>
+                                {<span class="code-variable">$name</span>}<br><br>
+                                <span class="code-comment">&lt;!-- 输出变量（不转义） --&gt;</span><br>
+                                {<span class="code-variable">$content</span>|raw}<br><br>
+                                <span class="code-comment">&lt;!-- 输出带默认值 --&gt;</span><br>
+                                {<span class="code-variable">$title</span>|default=<span class="code-string">'默认标题'</span>}
+                            </div>
+
+                            <h3>条件判断</h3>
+                            <div class="doc-code">
+                                <span class="code-label">html</span>
+                                {<span class="code-keyword">if</span> <span class="code-variable">$user</span>}<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;欢迎，{<span class="code-variable">$user.name</span>}&lt;/p&gt;<br>
+                                {<span class="code-keyword">else</span>}<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;请登录&lt;/p&gt;<br>
+                                {/<span class="code-keyword">if</span>}
+                            </div>
+
+                            <h3>循环遍历</h3>
+                            <div class="doc-code">
+                                <span class="code-label">html</span>
+                                {<span class="code-keyword">foreach</span> <span class="code-variable">$list</span> <span class="code-keyword">as</span> <span class="code-variable">$item</span>}<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;{<span class="code-variable">$item.title</span>}&lt;/div&gt;<br>
+                                {/<span class="code-keyword">foreach</span>}<br><br>
+                                <span class="code-comment">&lt;!-- 带索引的循环 --&gt;</span><br>
+                                {<span class="code-keyword">foreach</span> <span class="code-variable">$list</span> <span class="code-keyword">as</span> <span class="code-variable">$index</span> =&gt; <span class="code-variable">$item</span>}<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;{<span class="code-variable">$index</span>}. {<span class="code-variable">$item.title</span>}&lt;/div&gt;<br>
+                                {/<span class="code-keyword">foreach</span>}
+                            </div>
+
+                            <h2 id="inherit"><i class="bi bi-files me-1"></i>模板继承</h2>
+                            <p>模板继承是组织视图的核心方式，类似于面向对象中的类继承。</p>
+
+                            <h3>定义布局模板</h3>
+                            <div class="doc-code">
+                                <span class="code-label">html</span>
+                                <span class="code-comment">&lt;!-- app/View/layout/main.html --&gt;</span><br>
+                                &lt;!DOCTYPE html&gt;<br>
+                                &lt;html&gt;<br>
+                                &lt;head&gt;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;{<span class="code-keyword">block</span> <span class="code-string">title</span>}默认标题{/<span class="code-keyword">block</span>}&lt;/title&gt;<br>
+                                &lt;/head&gt;<br>
+                                &lt;body&gt;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-keyword">block</span> <span class="code-string">content</span>}{/<span class="code-keyword">block</span>}<br>
+                                &lt;/body&gt;<br>
+                                &lt;/html&gt;
+                            </div>
+
+                            <h3>继承布局</h3>
+                            <div class="doc-code">
+                                <span class="code-label">html</span>
+                                <span class="code-comment">&lt;!-- app/View/article/index.html --&gt;</span><br>
+                                {<span class="code-keyword">extends</span> <span class="code-string">'layout/main'</span>}<br><br>
+                                {<span class="code-keyword">block</span> <span class="code-string">title</span>}文章列表{/<span class="code-keyword">block</span>}<br><br>
+                                {<span class="code-keyword">block</span> <span class="code-string">content</span>}<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;文章列表&lt;/h1&gt;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;{<span class="code-keyword">foreach</span> <span class="code-variable">$list</span> <span class="code-keyword">as</span> <span class="code-variable">$item</span>}<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;{<span class="code-variable">$item.title</span>}&lt;/div&gt;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;{/<span class="code-keyword">foreach</span>}<br>
+                                {/<span class="code-keyword">block</span>}
+                            </div>
+
+                            <h2 id="include"><i class="bi bi-box-arrow-in-down-right me-1"></i>模板包含</h2>
+                            <p>使用 <code>include</code> 引入子模板，实现视图复用。</p>
+
+                            <h3>包含子模板</h3>
+                            <div class="doc-code">
+                                <span class="code-label">html</span>
+                                <span class="code-comment">&lt;!-- 引入导航栏 --&gt;</span><br>
+                                {<span class="code-keyword">include</span> <span class="code-string">'partial/navbar'</span>}<br><br>
+                                <span class="code-comment">&lt;!-- 引入侧边栏并传参 --&gt;</span><br>
+                                {<span class="code-keyword">include</span> <span class="code-string">'partial/sidebar'</span> [<span class="code-string">'menus'</span> =&gt; <span class="code-variable">$menus</span>]}
+                            </div>
+
+                            <div class="doc-tip tip-info">
+                                <i class="bi bi-info-circle-fill"></i>
+                                <div>模板引擎会自动缓存编译后的 PHP 代码，生产环境下无需额外配置即可享受高性能。</div>
+                            </div>
+
+                            <div class="doc-pagination">
+                                <a href="model.html">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <div>
+                                        <div class="page-label">上一篇</div>
+                                        <div class="page-title">模型与数据库</div>
+                                    </div>
+                                </a>
+                                <a href="config.html" class="page-next">
+                                    <div>
+                                        <div class="page-label">下一篇</div>
+                                        <div class="page-title">配置参考 <i class="bi bi-arrow-right"></i></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card doc-sidebar-toc">
+                    <div class="sidebar-header">文档目录
+                        <button class="sidebar-close-btn" aria-label="关闭"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <div class="sidebar-body doc-toc-body">
+                        <ul class="doc-toc">
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">基础</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="index.html"><span>框架概述</span></a></li>
+                                    <li class="toc-sub-group" data-toggle="toc">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-chevron-down toc-arrow"></i>
+                                            <i class="bi bi-folder text-secondary"></i>
+                                            <span class="fw-semibold">安装部署</span>
+                                            <span class="badge bg-secondary rounded-pill ms-auto">4</span>
+                                        </div>
+                                    </li>
+                                    <li class="toc-children">
+                                        <ul>
+                                            <li><a href="install.html#requirements"><span>环境要求</span></a></li>
+                                            <li><a href="install.html#composer"><span>Composer 安装</span></a></li>
+                                            <li><a href="install.html#config"><span>配置数据库</span></a></li>
+                                            <li><a href="install.html#nginx"><span>Nginx 配置</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="quickstart.html"><span>快速开始</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">架构</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">4</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="route.html"><span>路由系统</span></a></li>
+                                    <li><a href="controller.html"><span>控制器</span></a></li>
+                                    <li><a href="model.html"><span>模型与数据库</span></a></li>
+                                    <li><a href="view.html" class="active"><span>视图模板</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">进阶</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="config.html"><span>配置参考</span></a></li>
+                                    <li><a href="modules.html"><span>内置模块</span></a></li>
+                                    <li><a href="faq.html"><span>常见问题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="../license.html" class="quick-link"><i class="bi bi-shield-lock"></i>购买授权</a>
+                        <a href="../consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>提交咨询</a>
+                        <a href="../outsourcing.html" class="quick-link"><i class="bi bi-briefcase"></i>定制需求</a>
+                    </div>
+                </div>
+            </div>
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-overlay.html"></xq-include>
+<xq-include file="/partials/doc-end.html"></xq-include>

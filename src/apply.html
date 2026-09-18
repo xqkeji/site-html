@@ -1,0 +1,122 @@
+<xq-include file="/partials/doc-start.html" title="应聘登记 - 新齐程序实践" docClass=''></xq-include>
+
+
+        <!-- 内容区 -->
+        <div class="content-area">
+            <div class="main-content">
+                <!-- 应聘登记表单 -->
+            <div class="section-card bg-white">
+                <div class="section-header bg-secondary text-white">
+                    <span>
+                        <a href="index.html" class="text-white text-decoration-none">主页</a>
+                        &nbsp;/&nbsp;<a href="recruit.html" class="text-white text-decoration-none">招聘信息</a>&nbsp;/&nbsp;应聘登记
+                    </span>
+                </div>
+                <div class="section-body">
+                    <form id="applyForm" class="apply-form">
+                        <!-- 应聘岗位（固定） -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">应聘岗位：</label>
+                            <input type="text" class="form-control" value="PHP 全栈开发实习工程师" readonly>
+                        </div>
+
+                        <!-- 姓名 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">姓名：</label>
+                            <input type="text" class="form-control" placeholder="请输入真实姓名" required>
+                        </div>
+
+                        <!-- 手机号 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">手机号：</label>
+                            <input type="tel" class="form-control" placeholder="请输入手机号" required>
+                        </div>
+
+                        <!-- 邮箱 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">邮箱：</label>
+                            <input type="email" class="form-control" placeholder="请输入邮箱">
+                        </div>
+
+                        <!-- 学历 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">学历：</label>
+                            <select class="form-select">
+                                <option value="" selected disabled>请选择学历</option>
+                                <option value="college">大专</option>
+                                <option value="bachelor">本科</option>
+                                <option value="master">硕士</option>
+                                <option value="other">其他</option>
+                            </select>
+                        </div>
+
+                        <!-- 是否在校生 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">是否在校生：</label>
+                            <select class="form-select" required>
+                                <option value="" selected disabled>请选择</option>
+                                <option value="yes">是</option>
+                                <option value="no">否</option>
+                            </select>
+                        </div>
+
+                        <!-- 毕业时间 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">预计毕业时间：</label>
+                            <input type="month" class="form-control" required>
+                        </div>
+
+                        <!-- 期望薪资 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">期望薪资：</label>
+                            <div class="d-flex align-items-center">
+                                <input type="number" class="form-control" style="max-width: 120px;" placeholder="1800" min="0">
+                                <span class="ms-2 text-danger fw-bold">元/月</span>
+                            </div>
+                        </div>
+
+                        <!-- 个人简介 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">个人简介：</label>
+                            <textarea class="form-control" rows="6" placeholder="请简要介绍个人技能、项目经验等"></textarea>
+                        </div>
+
+                        <!-- 简历附件 -->
+                        <div class="mb-3">
+                            <label class="form-label-custom text-body">简历附件：</label>
+                            <input type="file" class="form-control" accept=".pdf,.doc,.docx">
+                        </div>
+
+                        <!-- 提交 -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary px-5">提交应聘</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="recruit.html" class="quick-link"><i class="bi bi-card-text"></i>查看岗位</a>
+                        <a href="consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>咨询岗位</a>
+                        <a href="profile.html" class="quick-link"><i class="bi bi-person"></i>我的</a>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">温馨提示</div>
+                    <div class="sidebar-body">
+                        <ul>
+                            <li>本岗位仅限在校生申请</li>
+                            <li><a href="recruit.html">查看其他岗位<span class="sidebar-date">招聘</span></a></li>
+                            <li><a href="contact-detail.html">疑问？联系我们<span class="sidebar-date">联系</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 底部版权 -->
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-end.html"></xq-include>

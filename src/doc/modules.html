@@ -1,0 +1,210 @@
+<xq-include file="/partials/doc-start.html" title="内置模块 - 新齐低代码开发框架文档" docClass=' doc-page'></xq-include>
+
+
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><a href="../index.html" class="text-white text-decoration-none">主页</a>&nbsp;/&nbsp;文档&nbsp;/&nbsp;内置模块</span>
+                        <span class="doc-version">v2.0</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="doc-content">
+                            <h2 id="modules"><i class="bi bi-puzzle me-1"></i>内置模块</h2>
+                            <p>框架提供丰富的内置模块，开箱即用，支持热插拔。</p>
+
+                            <h3>用户管理模块 (user)</h3>
+                            <p>提供完整的用户注册、登录、个人中心功能。</p>
+                            <ul>
+                                <li>用户注册与登录（支持邮箱/手机号）</li>
+                                <li>密码找回与重置</li>
+                                <li>个人中心与资料编辑</li>
+                                <li>会员等级与积分系统</li>
+                                <li>第三方登录集成（微信、QQ）</li>
+                            </ul>
+
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji module:install user
+                            </div>
+
+                            <h3>权限管理模块 (auth)</h3>
+                            <p>基于 RBAC 的细粒度权限控制系统。</p>
+                            <ul>
+                                <li>角色管理（创建、编辑、删除）</li>
+                                <li>权限节点管理</li>
+                                <li>菜单权限控制</li>
+                                <li>操作日志记录</li>
+                                <li>数据权限隔离</li>
+                            </ul>
+
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji module:install auth
+                            </div>
+
+                            <h3>内容管理模块 (cms)</h3>
+                            <p>灵活的内容管理系统，支持文章、分类、标签。</p>
+                            <ul>
+                                <li>文章发布与编辑（富文本编辑器）</li>
+                                <li>分类管理（多级分类）</li>
+                                <li>标签管理</li>
+                                <li>评论系统</li>
+                                <li>SEO 优化</li>
+                            </ul>
+
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji module:install cms
+                            </div>
+
+                            <h3>商城系统模块 (shop)</h3>
+                            <p>完整的电商解决方案。</p>
+                            <ul>
+                                <li>商品管理（SKU、库存、价格）</li>
+                                <li>订单管理（下单、支付、发货）</li>
+                                <li>支付集成（支付宝、微信支付）</li>
+                                <li>物流跟踪</li>
+                                <li>优惠券与促销活动</li>
+                            </ul>
+
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji module:install shop
+                            </div>
+
+                            <h3>图片管理模块 (media)</h3>
+                            <p>统一的文件与图片管理。</p>
+                            <ul>
+                                <li>文件上传（支持拖拽上传）</li>
+                                <li>图片缩略图自动生成</li>
+                                <li>相册管理</li>
+                                <li>云存储集成（阿里云 OSS、七牛云）</li>
+                            </ul>
+
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji module:install media
+                            </div>
+
+                            <h3>代码生成模块 (codegen)</h3>
+                            <p>根据数据表自动生成 CRUD 代码，大幅提升开发效率。</p>
+                            <ul>
+                                <li>根据数据表生成模型</li>
+                                <li>生成控制器与路由</li>
+                                <li>生成视图模板</li>
+                                <li>支持自定义模板</li>
+                            </ul>
+
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji module:install codegen
+                            </div>
+
+                            <div class="doc-tip tip-success">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <div>所有模块均采用热插拔设计，安装后自动注册路由与菜单，卸载时自动清理，不影响系统运行。</div>
+                            </div>
+
+                            <div class="doc-pagination">
+                                <a href="config.html">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <div>
+                                        <div class="page-label">上一篇</div>
+                                        <div class="page-title">配置参考</div>
+                                    </div>
+                                </a>
+                                <a href="faq.html" class="page-next">
+                                    <div>
+                                        <div class="page-label">下一篇</div>
+                                        <div class="page-title">常见问题 <i class="bi bi-arrow-right"></i></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card doc-sidebar-toc">
+                    <div class="sidebar-header">文档目录</div>
+                    <div class="sidebar-body doc-toc-body">
+                        <ul class="doc-toc">
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">基础</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="index.html"><span>框架概述</span></a></li>
+                                    <li class="toc-sub-group" data-toggle="toc">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-chevron-down toc-arrow"></i>
+                                            <i class="bi bi-folder text-secondary"></i>
+                                            <span class="fw-semibold">安装部署</span>
+                                            <span class="badge bg-secondary rounded-pill ms-auto">4</span>
+                                        </div>
+                                    </li>
+                                    <li class="toc-children">
+                                        <ul>
+                                            <li><a href="install.html#requirements"><span>环境要求</span></a></li>
+                                            <li><a href="install.html#composer"><span>Composer 安装</span></a></li>
+                                            <li><a href="install.html#config"><span>配置数据库</span></a></li>
+                                            <li><a href="install.html#nginx"><span>Nginx 配置</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="quickstart.html"><span>快速开始</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">架构</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">4</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="route.html"><span>路由系统</span></a></li>
+                                    <li><a href="controller.html"><span>控制器</span></a></li>
+                                    <li><a href="model.html"><span>模型与数据库</span></a></li>
+                                    <li><a href="view.html"><span>视图模板</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">进阶</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="config.html"><span>配置参考</span></a></li>
+                                    <li><a href="modules.html" class="active"><span>内置模块</span></a></li>
+                                    <li><a href="faq.html"><span>常见问题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="../license.html" class="quick-link"><i class="bi bi-shield-lock"></i>购买授权</a>
+                        <a href="../consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>提交咨询</a>
+                        <a href="../outsourcing.html" class="quick-link"><i class="bi bi-briefcase"></i>定制需求</a>
+                    </div>
+                </div>
+            </div>
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-overlay.html"></xq-include>
+<xq-include file="/partials/doc-end.html"></xq-include>

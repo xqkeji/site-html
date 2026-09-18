@@ -1,0 +1,84 @@
+<xq-include file="/partials/doc-start.html" title="注册 - 新齐程序实践" docClass=''></xq-include>
+
+
+        <!-- 内容区 -->
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><i class="bi bi-person-plus me-1"></i>注册账号</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="auth-form-wrapper">
+                            <form>
+                                <!-- 手机号 -->
+                                <div class="mb-3">
+                                    <label class="form-label text-body">手机号</label>
+                                    <input type="tel" class="form-control" placeholder="请输入手机号">
+                                </div>
+
+                                <!-- 验证码 -->
+                                <div class="mb-3">
+                                    <label class="form-label text-body">验证码</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="请输入验证码">
+                                        <button class="btn btn-outline-secondary" type="button">获取验证码</button>
+                                    </div>
+                                </div>
+
+                                <!-- 密码 -->
+                                <div class="mb-3">
+                                    <label class="form-label text-body">密码</label>
+                                    <input type="password" class="form-control" placeholder="至少8位，建议字母与数字组合">
+                                </div>
+
+                                <!-- 确认密码 -->
+                                <div class="mb-3">
+                                    <label class="form-label text-body">确认密码</label>
+                                    <input type="password" class="form-control" placeholder="请再次输入密码">
+                                </div>
+
+                                <!-- 同意协议 -->
+                                <div class="mb-3 auth-agreement-row">
+                                    <label class="auth-agreement-label">
+                                        <input type="checkbox" id="agreeTerms">
+                                        <span>我已阅读并同意<a href="#" class="text-decoration-none">《用户服务协议》</a>和<a href="#" class="text-decoration-none">《隐私政策》</a></span>
+                                    </label>
+                                </div>
+
+                                <!-- 注册按钮 -->
+                                <button type="submit" class="btn btn-primary btn-submit">注册</button>
+
+                                <!-- 底部互链 -->
+                                <div class="auth-links">
+                                    已有账号？<a href="login.html">立即登录</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="login.html" class="quick-link"><i class="bi bi-box-arrow-in-right"></i>用户登录</a>
+                        <a href="forgot-password.html" class="quick-link"><i class="bi bi-key"></i>忘记密码</a>
+                        <a href="index.html" class="quick-link"><i class="bi bi-house"></i>返回首页</a>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">帮助提示</div>
+                    <div class="sidebar-body">
+                        <ul>
+                            <li><a href="login.html">已有账号？<span class="sidebar-date">登录</span></a></li>
+                            <li><a href="forgot-password.html">忘记密码了？<span class="sidebar-date">找回</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- 底部版权 -->
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-end.html"></xq-include>

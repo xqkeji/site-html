@@ -1,0 +1,215 @@
+<xq-include file="/partials/doc-start.html" title="路由系统 - 新齐低代码开发框架文档" docClass=' doc-page'></xq-include>
+
+
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><a href="../index.html" class="text-white text-decoration-none">主页</a>&nbsp;/&nbsp;文档&nbsp;/&nbsp;路由系统</span>
+                        <span class="doc-version">v2.0</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="doc-content">
+                            <h2 id="basic"><i class="bi bi-signpost-split me-1"></i>基础路由</h2>
+                            <p>路由文件位于 <code>route/web.php</code>，所有路由都在此文件中定义。</p>
+
+                            <h3>基本路由定义</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-keyword">use</span> Xqkeji\<span class="code-function">Router</span>;<br><br>
+                                <span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/user'</span>, <span class="code-string">'UserController@index'</span>);<br>
+                                <span class="code-variable">$router</span>-><span class="code-function">post</span>(<span class="code-string">'/user'</span>, <span class="code-string">'UserController@store'</span>);<br>
+                                <span class="code-variable">$router</span>-><span class="code-function">put</span>(<span class="code-string">'/user/{id}'</span>, <span class="code-string">'UserController@update'</span>);<br>
+                                <span class="code-variable">$router</span>-><span class="code-function">delete</span>(<span class="code-string">'/user/{id}'</span>, <span class="code-string">'UserController@delete'</span>);
+                            </div>
+
+                            <h2 id="params"><i class="bi bi-braces me-1"></i>路由参数</h2>
+                            <p>路由参数使用 <code>{参数名}</code> 语法定义：</p>
+
+                            <h3>必选参数</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/user/{id}'</span>, <span class="code-string">'UserController@show'</span>);
+                            </div>
+
+                            <h3>可选参数</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/user/{id?}'</span>, <span class="code-string">'UserController@show'</span>);
+                            </div>
+
+                            <h3>参数约束</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/user/{id}'</span>, <span class="code-string">'UserController@show'</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;-><span class="code-function">where</span>(<span class="code-string">'id'</span>, <span class="code-string">'[0-9]+'</span>);
+                            </div>
+
+                            <h2 id="middleware"><i class="bi bi-shield-check me-1"></i>中间件</h2>
+                            <p>中间件用于在请求到达控制器之前进行过滤和处理。</p>
+
+                            <h3>创建中间件</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-keyword">namespace</span> App\<span class="code-function">Middleware</span>;<br><br>
+                                <span class="code-keyword">use</span> Xqkeji\<span class="code-function">Middleware</span>;<br><br>
+                                <span class="code-keyword">class</span> <span class="code-function">AuthMiddleware</span> <span class="code-keyword">extends</span> <span class="code-function">Middleware</span><br>
+                                {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public function</span> <span class="code-function">handle</span>(<span class="code-variable">$request</span>, <span class="code-variable">$next</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">if</span> (!<span class="code-variable">$request</span>-><span class="code-function">user</span>()) {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-function">redirect</span>(<span class="code-string">'/login'</span>);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-variable">$next</span>(<span class="code-variable">$request</span>);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                }
+                            </div>
+
+                            <h3>应用中间件</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/dashboard'</span>, <span class="code-string">'DashboardController@index'</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;-><span class="code-function">middleware</span>(<span class="code-string">'auth'</span>);
+                            </div>
+
+                            <h2 id="group"><i class="bi bi-collection me-1"></i>路由分组</h2>
+                            <p>路由分组用于批量应用中间件、前缀等属性。</p>
+
+                            <h3>基础分组</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$router</span>-><span class="code-function">group</span>([<span class="code-string">'prefix'</span> => <span class="code-string">'/admin'</span>], <span class="code-keyword">function</span> (<span class="code-variable">$router</span>) {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/dashboard'</span>, <span class="code-string">'AdminController@dashboard'</span>);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/users'</span>, <span class="code-string">'AdminController@users'</span>);<br>
+                                });
+                            </div>
+
+                            <h3>带中间件的分组</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$router</span>-><span class="code-function">group</span>([<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'prefix'</span> => <span class="code-string">'/admin'</span>,<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'middleware'</span> => [<span class="code-string">'auth'</span>, <span class="code-string">'admin'</span>]<br>
+                                ], <span class="code-keyword">function</span> (<span class="code-variable">$router</span>) {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/dashboard'</span>, <span class="code-string">'AdminController@dashboard'</span>);<br>
+                                });
+                            </div>
+
+                            <h3>命名路由</h3>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/user/profile'</span>, <span class="code-string">'UserController@profile'</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;-><span class="code-function">name</span>(<span class="code-string">'user.profile'</span>);<br><br>
+                                <span class="code-comment">// 生成 URL</span><br>
+                                <span class="code-variable">$url</span> = <span class="code-function">route</span>(<span class="code-string">'user.profile'</span>);
+                            </div>
+
+                            <div class="doc-tip tip-info">
+                                <i class="bi bi-info-circle-fill"></i>
+                                <div>命名路由可以方便地生成 URL，避免硬编码路由路径。</div>
+                            </div>
+
+                            <div class="doc-pagination">
+                                <a href="quickstart.html">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <div>
+                                        <div class="page-label">上一篇</div>
+                                        <div class="page-title">快速开始</div>
+                                    </div>
+                                </a>
+                                <a href="controller.html" class="page-next">
+                                    <div>
+                                        <div class="page-label">下一篇</div>
+                                        <div class="page-title">控制器 <i class="bi bi-arrow-right"></i></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card doc-sidebar-toc">
+                    <div class="sidebar-header">文档目录
+                        <button class="sidebar-close-btn" aria-label="关闭"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <div class="sidebar-body doc-toc-body">
+                        <ul class="doc-toc">
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">基础</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="index.html"><span>框架概述</span></a></li>
+                                    <li class="toc-sub-group" data-toggle="toc">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-chevron-down toc-arrow"></i>
+                                            <i class="bi bi-folder text-secondary"></i>
+                                            <span class="fw-semibold">安装部署</span>
+                                            <span class="badge bg-secondary rounded-pill ms-auto">4</span>
+                                        </div>
+                                    </li>
+                                    <li class="toc-children">
+                                        <ul>
+                                            <li><a href="install.html#requirements"><span>环境要求</span></a></li>
+                                            <li><a href="install.html#composer"><span>Composer 安装</span></a></li>
+                                            <li><a href="install.html#config"><span>配置数据库</span></a></li>
+                                            <li><a href="install.html#nginx"><span>Nginx 配置</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="quickstart.html"><span>快速开始</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">架构</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">4</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="route.html" class="active"><span>路由系统</span></a></li>
+                                    <li><a href="controller.html"><span>控制器</span></a></li>
+                                    <li><a href="model.html"><span>模型与数据库</span></a></li>
+                                    <li><a href="view.html"><span>视图模板</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">进阶</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="config.html"><span>配置参考</span></a></li>
+                                    <li><a href="modules.html"><span>内置模块</span></a></li>
+                                    <li><a href="faq.html"><span>常见问题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="../license.html" class="quick-link"><i class="bi bi-shield-lock"></i>购买授权</a>
+                        <a href="../consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>提交咨询</a>
+                        <a href="../outsourcing.html" class="quick-link"><i class="bi bi-briefcase"></i>定制需求</a>
+                    </div>
+                </div>
+            </div>
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-overlay.html"></xq-include>
+<xq-include file="/partials/doc-end.html"></xq-include>

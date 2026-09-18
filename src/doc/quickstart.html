@@ -1,0 +1,225 @@
+<xq-include file="/partials/doc-start.html" title="快速开始 - 新齐低代码开发框架文档" docClass=' doc-page'></xq-include>
+
+
+        <div class="content-area">
+            <div class="main-content">
+                <div class="section-card bg-white">
+                    <div class="section-header bg-secondary text-white">
+                        <span><a href="../index.html" class="text-white text-decoration-none">主页</a>&nbsp;/&nbsp;文档&nbsp;/&nbsp;快速开始</span>
+                        <span class="doc-version">v2.0</span>
+                    </div>
+                    <div class="section-body">
+                        <div class="doc-content">
+                            <h2 id="overview"><i class="bi bi-lightning-charge me-1"></i>快速开始</h2>
+                            <p>本节将带你快速创建一个简单的文章管理功能，了解框架的基本开发流程。</p>
+
+                            <h3>目录结构</h3>
+                            <p>框架遵循标准的 MVC 目录结构：</p>
+                            <div class="doc-code">
+                                <span class="code-label">目录</span>
+                                myapp/<br>
+                                ├── <span class="code-function">app/</span><br>
+                                │&nbsp;&nbsp; ├── <span class="code-function">Controller/</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 控制器</span><br>
+                                │&nbsp;&nbsp; ├── <span class="code-function">Model/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 数据模型</span><br>
+                                │&nbsp;&nbsp; └── <span class="code-function">View/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 视图模板</span><br>
+                                ├── <span class="code-function">route/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># 路由定义</span><br>
+                                └── <span class="code-function">public/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment"># Web 入口</span>
+                            </div>
+
+                            <h3>第一步：创建控制器</h3>
+                            <p>创建 <code>app/Controller/ArticleController.php</code>：</p>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-keyword">namespace</span> App\<span class="code-function">Controller</span>;<br><br>
+                                <span class="code-keyword">use</span> Xqkeji\<span class="code-function">Controller</span>;<br>
+                                <span class="code-keyword">use</span> App\<span class="code-function">Model</span>\Article;<br><br>
+                                <span class="code-keyword">class</span> <span class="code-function">ArticleController</span> <span class="code-keyword">extends</span> <span class="code-function">Controller</span><br>
+                                {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">/** 文章列表 */</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public function</span> <span class="code-function">index</span>()<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$list</span> = Article::<span class="code-function">where</span>(<span class="code-string">'status'</span>, <span class="code-keyword">1</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-><span class="code-function">orderBy</span>(<span class="code-string">'id'</span>, <span class="code-string">'desc'</span>)<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-><span class="code-function">paginate</span>(<span class="code-keyword">10</span>);<br><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-variable">$this</span>-><span class="code-function">view</span>(<span class="code-string">'article/index'</span>, [<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-string">'list'</span> => <span class="code-variable">$list</span><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                                }
+                            </div>
+
+                            <h3>第二步：定义路由</h3>
+                            <p>在 <code>route/web.php</code> 中添加路由：</p>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/article'</span>, <span class="code-string">'ArticleController@index'</span>);<br>
+                                <span class="code-variable">$router</span>-><span class="code-function">get</span>(<span class="code-string">'/article/{id}'</span>, <span class="code-string">'ArticleController@show'</span>);<br>
+                                <span class="code-variable">$router</span>-><span class="code-function">post</span>(<span class="code-string">'/article'</span>, <span class="code-string">'ArticleController@store'</span>);
+                            </div>
+
+                            <h3>第三步：创建视图</h3>
+                            <p>创建 <code>app/View/article/index.html</code>：</p>
+                            <div class="doc-code">
+                                <span class="code-label">html</span>
+                                {<span class="code-keyword">extends</span> <span class="code-string">'layout/main'</span>}<br><br>
+                                {<span class="code-keyword">block</span> <span class="code-string">content</span>}<br>
+                                &lt;<span class="code-variable">h1</span>&gt;文章列表&lt;/<span class="code-variable">h1</span>&gt;<br>
+                                {<span class="code-keyword">foreach</span> <span class="code-variable">$list</span> <span class="code-keyword">as</span> <span class="code-variable">$item</span>}<br>
+                                &lt;<span class="code-variable">div</span> <span class="code-string">class</span>=<span class="code-string">"article-item"</span>&gt;<br>
+                                &nbsp;&nbsp;&lt;<span class="code-variable">a</span> <span class="code-string">href</span>=<span class="code-string">"/article/{<span class="code-variable">$item.id</span>}"</span>&gt;{<span class="code-variable">$item.title</span>}&lt;/<span class="code-variable">a</span>&gt;<br>
+                                &lt;/<span class="code-variable">div</span>&gt;<br>
+                                {/<span class="code-keyword">foreach</span>}<br>
+                                {/<span class="code-keyword">block</span>}
+                            </div>
+
+                            <h3>第四步：创建模型</h3>
+                            <p>创建 <code>app/Model/Article.php</code>：</p>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-keyword">namespace</span> App\<span class="code-function">Model</span>;<br><br>
+                                <span class="code-keyword">use</span> Xqkeji\<span class="code-function">Model</span>;<br><br>
+                                <span class="code-keyword">class</span> <span class="code-function">Article</span> <span class="code-keyword">extends</span> <span class="code-function">Model</span><br>
+                                {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected</span> <span class="code-variable">$table</span> = <span class="code-string">'articles'</span>;<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">protected</span> <span class="code-variable">$fillable</span> = [<span class="code-string">'title'</span>, <span class="code-string">'content'</span>, <span class="code-string">'status'</span>];<br>
+                                }
+                            </div>
+
+                            <h3>第五步：创建数据表</h3>
+                            <p>执行数据库迁移：</p>
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji make:migration create_articles_table
+                            </div>
+                            <p>编辑生成的迁移文件：</p>
+                            <div class="doc-code">
+                                <span class="code-label">php</span>
+                                <span class="code-keyword">public function</span> <span class="code-function">up</span>()<br>
+                                {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Schema::<span class="code-function">create</span>(<span class="code-string">'articles'</span>, <span class="code-keyword">function</span> (<span class="code-variable">$table</span>) {<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$table</span>-><span class="code-function">id</span>();<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$table</span>-><span class="code-function">string</span>(<span class="code-string">'title'</span>);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$table</span>-><span class="code-function">text</span>(<span class="code-string">'content'</span>);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$table</span>-><span class="code-function">tinyInteger</span>(<span class="code-string">'status'</span>)-><span class="code-function">default</span>(<span class="code-keyword">1</span>);<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-variable">$table</span>-><span class="code-function">timestamps</span>();<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;});<br>
+                                }
+                            </div>
+                            <p>运行迁移：</p>
+                            <div class="doc-code">
+                                <span class="code-label">bash</span>
+                                php xqkeji migrate:run
+                            </div>
+
+                            <h3>完成！</h3>
+                            <p>访问 <code>http://yourdomain.com/article</code> 即可查看文章列表。</p>
+
+                            <div class="doc-tip tip-success">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <div>恭喜！你已经完成了第一个功能的开发。接下来可以深入学习<a href="route.html">路由系统</a>、<a href="controller.html">控制器</a>、<a href="model.html">模型</a>等核心组件。</div>
+                            </div>
+
+                            <div class="doc-pagination">
+                                <a href="install.html">
+                                    <i class="bi bi-arrow-left"></i>
+                                    <div>
+                                        <div class="page-label">上一篇</div>
+                                        <div class="page-title">安装部署</div>
+                                    </div>
+                                </a>
+                                <a href="route.html" class="page-next">
+                                    <div>
+                                        <div class="page-label">下一篇</div>
+                                        <div class="page-title">路由系统 <i class="bi bi-arrow-right"></i></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-card doc-sidebar-toc">
+                    <div class="sidebar-header">文档目录
+                        <button class="sidebar-close-btn" aria-label="关闭"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                    <div class="sidebar-body doc-toc-body">
+                        <ul class="doc-toc">
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">基础</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="index.html"><span>框架概述</span></a></li>
+                                    <li class="toc-sub-group" data-toggle="toc">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <i class="bi bi-chevron-down toc-arrow"></i>
+                                            <i class="bi bi-folder text-secondary"></i>
+                                            <span class="fw-semibold">安装部署</span>
+                                            <span class="badge bg-secondary rounded-pill ms-auto">4</span>
+                                        </div>
+                                    </li>
+                                    <li class="toc-children">
+                                        <ul>
+                                            <li><a href="install.html#requirements"><span>环境要求</span></a></li>
+                                            <li><a href="install.html#composer"><span>Composer 安装</span></a></li>
+                                            <li><a href="install.html#config"><span>配置数据库</span></a></li>
+                                            <li><a href="install.html#nginx"><span>Nginx 配置</span></a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="quickstart.html" class="active"><span>快速开始</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">架构</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">4</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="route.html"><span>路由系统</span></a></li>
+                                    <li><a href="controller.html"><span>控制器</span></a></li>
+                                    <li><a href="model.html"><span>模型与数据库</span></a></li>
+                                    <li><a href="view.html"><span>视图模板</span></a></li>
+                                </ul>
+                            </li>
+                            <li class="toc-group-item" data-toggle="toc">
+                                <div class="d-flex align-items-center gap-2">
+                                    <i class="bi bi-chevron-down toc-arrow"></i>
+                                    <i class="bi bi-folder2-open text-primary"></i>
+                                    <span class="fw-semibold">进阶</span>
+                                    <span class="badge bg-primary rounded-pill ms-auto">3</span>
+                                </div>
+                            </li>
+                            <li class="toc-children">
+                                <ul>
+                                    <li><a href="config.html"><span>配置参考</span></a></li>
+                                    <li><a href="modules.html"><span>内置模块</span></a></li>
+                                    <li><a href="faq.html"><span>常见问题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sidebar-card">
+                    <div class="sidebar-header">快速操作</div>
+                    <div class="sidebar-body">
+                        <a href="../license.html" class="quick-link"><i class="bi bi-shield-lock"></i>购买授权</a>
+                        <a href="../consultation.html" class="quick-link"><i class="bi bi-chat-dots"></i>提交咨询</a>
+                        <a href="../outsourcing.html" class="quick-link"><i class="bi bi-briefcase"></i>定制需求</a>
+                    </div>
+                </div>
+            </div>
+<xq-include file="/partials/footer.html"></xq-include>
+
+        </div>
+<xq-include file="/partials/doc-overlay.html"></xq-include>
+<xq-include file="/partials/doc-end.html"></xq-include>
